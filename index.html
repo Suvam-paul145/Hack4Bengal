@@ -26,6 +26,12 @@
             --gradient-warning: linear-gradient(135deg, #FDCB6E 0%, #FFEAA7 100%);
             --gradient-card: linear-gradient(to bottom right, #FFFFFF, #F8F9FA);
             --gradient-dark: linear-gradient(135deg, #2D3436 0%, #636E72 100%);
+            --gradient-success: linear-gradient(135deg, #00B894 0%, #00D1A0 100%);
+            --gradient-danger: linear-gradient(135deg, #E17055 0%, #FF7675 100%);
+            --gradient-purple: linear-gradient(135deg, #6C5CE7 0%, #7B6CF6 100%);
+            --gradient-blue: linear-gradient(135deg, #74B9FF 0%, #0984E3 100%);
+            --gradient-orange: linear-gradient(135deg, #FDB777 0%, #F6784C 100%);
+            --gradient-frost: linear-gradient(135deg, #DFE6E9 0%, #B2BEC3 100%);
         }
 
         /* Base Styles */
@@ -579,7 +585,7 @@
 
         .assessment-description {
             font-size: 0.9rem;
-            color: var(--text);
+            color: var (--text);
             margin-bottom: 1.25rem;
             opacity: 0.8;
             line-height: 1.6;
@@ -1320,9 +1326,61 @@
             background-size: 200% 100%;
             animation: skeleton-loading 1.5s infinite;
         }
+
+        /* Enhanced Button Styles */
+        .btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Add these new button variations */
+        .btn-success {
+            background: var(--gradient-success);
+        }
+
+        .btn-danger {
+            background: var(--gradient-danger);
+        }
+
+        .btn-purple {
+            background: var(--gradient-purple);
+        }
+
+        .btn-blue {
+            background: var(--gradient-blue);
+        }
+
+        .btn-orange {
+            background: var(--gradient-orange);
+        }
+
+        .btn-frost {
+            background: var(--gradient-frost);
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -1777,7 +1835,105 @@
             document.querySelectorAll('.btn-start, .btn-consult, .nav-link').forEach(button => {
                 button.classList.add('ripple');
             });
+
+            // Button click handlers
+            document.querySelectorAll('.btn-start').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const testTitle = this.closest('.assessment-card').querySelector('.assessment-title').textContent;
+                    const testDescription = this.closest('.assessment-card').querySelector('.assessment-description').textContent;
+
+                    // You can replace this with actual test functionality
+                    Swal.fire({
+                        title: `Starting ${testTitle}`,
+                        text: 'Preparing your assessment...',
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonText: 'Begin Test',
+                        cancelButtonText: 'Cancel',
+                        background: '#fff',
+                        customClass: {
+                            confirmButton: 'btn btn-purple',
+                            cancelButton: 'btn btn-frost'
+                        }
+                    });
+                });
+            });
+
+            // Consultation button
+            document.querySelector('.btn-consult').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Book Consultation',
+                    html: `
+                    <div class="consultation-form">
+                        <select class="form-select" id="consultationType">
+                            <option value="">Select Consultation Type</option>
+                            <option value="video">Video Call</option>
+                            <option value="audio">Audio Call</option>
+                            <option value="chat">Chat Session</option>
+                        </select>
+                        <input type="date" class="form-input" id="consultationDate" min="${new Date().toISOString().split('T')[0]}">
+                        <select class="form-select" id="consultationTime">
+                            <option value="">Select Time Slot</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                        </select>
+                    </div>
+                `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Book Now',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-frost'
+                    }
+                });
+            });
+
+            // View All buttons
+            document.querySelectorAll('.btn-view-all').forEach(button => {
+                button.addEventListener('click', function () {
+                    const sectionTitle = this.closest('.section-header').querySelector('.section-title').textContent;
+                    // Replace with actual view all functionality
+                    window.location.href = `#${sectionTitle.toLowerCase().replace(/\s+/g, '-')}`;
+                });
+            });
+
+            // Quick Links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const section = this.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+
+                    // Add active class
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Navigate to section (replace with actual routing)
+                    console.log(`Navigating to: ${section}`);
+                });
+            });
+
+            // Auth buttons
+            document.querySelector('.btn-login').addEventListener('click', function () {
+                window.location.href = 'login.html';
+            });
+
+            document.querySelector('.btn-signup').addEventListener('click', function () {
+                window.location.href = 'signup.html';
+            });
         });
+
+        // Add loading states to buttons
+        function addLoadingState(button) {
+            button.disabled = true;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            return () => {
+                button.disabled = false;
+                button.innerHTML = originalText;
+            };
+        }
     </script>
 </body>
 
