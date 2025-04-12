@@ -57,7 +57,8 @@
             box-shadow: 0 4px 30px rgba(108, 92, 231, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
-            left: -280px;  /* Changed from transform to left */
+            left: -280px;
+            /* Changed from transform to left */
         }
 
         .side-nav.collapsed {
@@ -65,7 +66,8 @@
         }
 
         .side-nav.active {
-            left: 0;  /* Changed from transform to left */
+            left: 0;
+            /* Changed from transform to left */
         }
 
         .logo-container {
@@ -155,6 +157,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-link:hover,
@@ -389,11 +392,15 @@
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
             transition: all 0.4s ease;
             border: 1px solid rgba(0, 0, 0, 0.03);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px) rotateX(3deg) rotateY(3deg);
+            box-shadow:
+                20px 20px 60px rgba(0, 0, 0, 0.05),
+                -20px -20px 60px rgba(255, 255, 255, 0.8);
         }
 
         .card-header {
@@ -520,6 +527,8 @@
             transition: all 0.4s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.03);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .assessment-card:hover {
@@ -590,6 +599,8 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-start:hover {
@@ -605,6 +616,24 @@
 
         .btn-start:hover i {
             transform: translateX(3px);
+        }
+
+        .btn-start::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.1);
+            transform-origin: 0 0;
+            transform: rotate(45deg) translate(-50%, -50%);
+            transition: all 0.3s ease-out;
+            z-index: 0;
+        }
+
+        .btn-start:hover::before {
+            width: 0;
         }
 
         /* Blog Section */
@@ -630,6 +659,8 @@
             transition: all 0.4s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.03);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .blog-card:hover {
@@ -778,6 +809,8 @@
             display: inline-flex;
             align-items: center;
             box-shadow: 0 4px 15px rgba(0, 206, 201, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-consult:hover {
@@ -793,6 +826,24 @@
 
         .btn-consult:hover i {
             transform: translateX(3px);
+        }
+
+        .btn-consult::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.1);
+            transform-origin: 0 0;
+            transform: rotate(45deg) translate(-50%, -50%);
+            transition: all 0.3s ease-out;
+            z-index: 0;
+        }
+
+        .btn-consult:hover::before {
+            width: 0;
         }
 
         .consultation-image {
@@ -1061,6 +1112,213 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Advanced Animations and Effects */
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        .shimmer-effect {
+            animation: shimmer 2s infinite linear;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            background-size: 1000px 100%;
+        }
+
+        /* Advanced Card Hover Effects */
+        .dashboard-card,
+        .assessment-card,
+        .blog-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px) rotateX(3deg) rotateY(3deg);
+            box-shadow:
+                20px 20px 60px rgba(0, 0, 0, 0.05),
+                -20px -20px 60px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Animated Gradient Text */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 50%, var(--primary) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 3s linear infinite;
+        }
+
+        @keyframes gradient-text {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        /* Advanced Button Effects */
+        .btn-start,
+        .btn-consult {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-start::before,
+        .btn-consult::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.1);
+            transform-origin: 0 0;
+            transform: rotate(45deg) translate(-50%, -50%);
+            transition: all 0.3s ease-out;
+            z-index: 0;
+        }
+
+        .btn-start:hover::before,
+        .btn-consult:hover::before {
+            width: 0;
+        }
+
+        /* Glass Morphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Floating Animation */
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-element {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        /* Advanced Input Styles */
+        .input-field input:focus+i {
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .ripple:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+            z-index: 1000;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--accent));
+            border-radius: 5px;
+        }
+
+        /* Text Selection */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Advanced Navigation Effects */
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        /* Loading Skeleton Animation */
+        @keyframes skeleton-loading {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;600&display=swap" rel="stylesheet">
@@ -1453,7 +1711,7 @@
 
     <script>
         // Replace all existing JavaScript with this updated version
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const sidebarToggle = document.querySelector('.sidebar-toggle');
             const sideNav = document.querySelector('.side-nav');
             const mainContent = document.querySelector('.main-content');
@@ -1464,7 +1722,7 @@
                 e.stopPropagation();
                 sideNav.classList.toggle('active');
                 mainContent.classList.toggle('shifted');
-                
+
                 // Toggle icon
                 if (sideNav.classList.contains('active')) {
                     icon.classList.remove('fa-bars');
@@ -1502,6 +1760,22 @@
                     icon.classList.add('fa-bars');
                     sidebarToggle.style.left = '20px';
                 }
+            });
+
+            // Add scroll progress indicator
+            const scrollProgress = document.createElement('div');
+            scrollProgress.className = 'scroll-progress';
+            document.body.appendChild(scrollProgress);
+
+            window.addEventListener('scroll', () => {
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (window.scrollY / windowHeight);
+                scrollProgress.style.transform = `scaleX(${scrolled})`;
+            });
+
+            // Add ripple effect to buttons
+            document.querySelectorAll('.btn-start, .btn-consult, .nav-link').forEach(button => {
+                button.classList.add('ripple');
             });
         });
     </script>
