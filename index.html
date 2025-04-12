@@ -57,8 +57,7 @@
             box-shadow: 0 4px 30px rgba(108, 92, 231, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
-            left: 0;
-            transform: translateX(-280px);
+            left: -280px;  /* Changed from transform to left */
         }
 
         .side-nav.collapsed {
@@ -66,7 +65,7 @@
         }
 
         .side-nav.active {
-            transform: translateX(0);
+            left: 0;  /* Changed from transform to left */
         }
 
         .logo-container {
@@ -1059,11 +1058,9 @@
             z-index: 1000;
             box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
             transition: all 0.3s ease;
-        }
-
-        .sidebar-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;600&display=swap" rel="stylesheet">
@@ -1455,86 +1452,57 @@
     </main>
 
     <script>
-        // Mobile Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const sideNav = document.querySelector('.side-nav');
-
-        menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('active');
-        });
-
-        // Assessment Test Simulation
-        const assessmentButtons = document.querySelectorAll('.btn-start');
-
-        assessmentButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const assessmentTitle = this.closest('.assessment-card').querySelector('.assessment-title').textContent;
-                alert(Starting ${ assessmentTitle }...\n\nThis AI - powered assessment will evaluate your mental health status and provide personalized recommendations.);
-            });
-        });
-
-        // Consultation Button
-        const consultButton = document.querySelector('.btn-consult');
-
-        consultButton.addEventListener('click', function () {
-            alert("Booking consultation...\n\nOur AI will match you with the most suitable therapist based on your needs and preferences.");
-        });
-
-        // View All Buttons
-        const viewAllButtons = document.querySelectorAll('.btn-view-all');
-
-        viewAllButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const sectionTitle = this.closest('.section-header').querySelector('.section-title').textContent;
-                alert(Viewing all ${ sectionTitle.toLowerCase() }...);
-            });
-        });
-
-        // Login/Signup Buttons
-        const loginButton = document.querySelector('.btn-login');
-        const signupButton = document.querySelector('.btn-signup');
-
-        loginButton.addEventListener('click', function () {
-            alert("Login form will appear here...\n\nSecure authentication with biometric options available.");
-        });
-
-        signupButton.addEventListener('click', function () {
-            alert("Signup form will appear here...\n\nGet started with your mental health journey today.");
-        });
-
-        // Replace existing menu toggle code with this:
-        const sidebarToggle = document.querySelector('.sidebar-toggle');
-        const mainContent = document.querySelector('.main-content');
-
-        sidebarToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sideNav.classList.toggle('active');
-            mainContent.classList.toggle('shifted');
-
+        // Replace all existing JavaScript with this updated version
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sideNav = document.querySelector('.side-nav');
+            const mainContent = document.querySelector('.main-content');
             const icon = sidebarToggle.querySelector('i');
-            if (sideNav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
 
-        // Close sidebar when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!sideNav.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                sideNav.classList.remove('active');
-                mainContent.classList.remove('shifted');
-                const icon = sidebarToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
+            // Toggle sidebar
+            sidebarToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sideNav.classList.toggle('active');
+                mainContent.classList.toggle('shifted');
+                
+                // Toggle icon
+                if (sideNav.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                    sidebarToggle.style.left = '300px';
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    sidebarToggle.style.left = '20px';
+                }
+            });
 
-        // Prevent sidebar closing when clicking inside it
-        sideNav.addEventListener('click', (e) => {
-            e.stopPropagation();
+            // Close sidebar when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!sideNav.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    sideNav.classList.remove('active');
+                    mainContent.classList.remove('shifted');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    sidebarToggle.style.left = '20px';
+                }
+            });
+
+            // Prevent sidebar closing when clicking inside it
+            sideNav.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 992 && sideNav.classList.contains('active')) {
+                    sideNav.classList.remove('active');
+                    mainContent.classList.remove('shifted');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    sidebarToggle.style.left = '20px';
+                }
+            });
         });
     </script>
 </body>
