@@ -453,7 +453,7 @@
         .card-value {
             font-size: 1.9rem;
             font-weight: 700;
-            color: var(--dark);
+            color: var (--dark);
             margin-bottom: 0.5rem;
         }
 
@@ -1626,29 +1626,29 @@
 
             <!-- Add this right after the welcome-banner div and before dashboard-cards -->
             <div class="stats-container">
-                <div class="stat-frame glass-card">
+                <div class="stat-frame glass-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="stat-icon">
                         <i class="fas fa-user-md gradient-text"></i>
                         <div class="pulse-ring"></div>
                     </div>
-                    <h2 class="gradient-text">1.2K+</h2>
+                    <h2 class="gradient-text counter" data-target="1200">0</h2>
                     <p>Experts for you</p>
                 </div>
-                <div class="stat-frame glass-card">
+                <div class="stat-frame glass-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="stat-icon">
                         <i class="fas fa-users gradient-text"></i>
                         <div class="pulse-ring"></div>
                     </div>
-                    <h2 class="gradient-text">10K+</h2>
+                    <h2 class="gradient-text counter" data-target="10000">0</h2>
                     <p>User-experiences</p>
                 </div>
-                <div class="stat-frame glass-card">
+                <div class="stat-frame glass-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="stat-icon">
                         <i class="fas fa-video gradient-text"></i>
                         <div class="pulse-ring"></div>
                     </div>
-                    <h2 class="gradient-text">500+</h2>
-                    <p>Self help poscasts & video</p>
+                    <h2 class="gradient-text counter" data-target="500">0</h2>
+                    <p>Self help podcasts & video</p>
                 </div>
             </div>
 
@@ -2072,6 +2072,32 @@
 
             document.querySelector('.btn-signup').addEventListener('click', function () {
                 window.location.href = 'signup.html';
+            });
+
+            // Counter animation
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200; // The lower the slower
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+
+                    // Lower inc to slow and higher to slow
+                    const inc = target / speed;
+
+                    // Check if target is reached
+                    if (count < target) {
+                        // Add inc to count and output in counter
+                        counter.innerText = Math.ceil(count + inc);
+                        // Call function every ms
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+
+                updateCount();
             });
         });
 
